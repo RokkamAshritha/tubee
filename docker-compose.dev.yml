@@ -1,0 +1,66 @@
+services:
+  tubee:
+    build: .
+    command:
+      - "watchmedo"
+      - "auto-restart"
+      - "--directory=./"
+      - "--pattern=*.py"
+      - "--recursive"
+      - "--"
+      - "flask"
+      - "--debug"
+      - "run"
+      - "--host"
+      - "0.0.0.0"
+      - "--port"
+      - "8000"
+      - "--no-reload"
+    container_name: "tubee_app"
+    depends_on:
+      - "postgres"
+      - "celery"
+    env_file:
+      - "instance/development.env"
+    ports:
+      - "8000:8000"
+    volumes:
+      - ".:/usr/src/tubee"
+  postgres:
+    container_name: "tubee_db"
+    env_file:
+      - "instance/development.env"
+    image: "postgres:12-alpine"
+    ports:
+      - "5432:5432"
+    volumes:
+      - "postgres_data:/var/lib/postgresql/data"
+  celery:
+    build: .
+    command:
+      - "celery"
+      - "--app=celery_worker.celery"
+      - "worker"
+      - "--loglevel=info"
+    container_name: "tubee_celery"
+    depends_on:
+      - "rabbitmq"
+    env_file:
+      - "instance/development.env"
+    volumes:
+      - ".:/usr/src/tubee"
+  rabbitmq:
+    container_name: "tubee_rabbitmq"
+    hostname: "tubee-rabbitmq"
+    environment:
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "-rabbit consumer_timeout 31622400000"
+    image: "rabbitmq:3.8"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - "rabbitmq_data:/var/lib/rabbitmq"
+
+volumes:
+  rabbitmq_data:
+  postgres_data:

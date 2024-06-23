@@ -1,0 +1,63 @@
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.isort]
+profile = "black"
+src_paths = ["tubee", "migrations"]
+
+[tool.poetry]
+name = "tubee"
+version = "0.15.1"
+description = "A Web Application for Monitoring New YouTube Videos"
+license = "MIT License"
+authors = ["Tomy Hsieh <pypi@tomy.me>"]
+readme = "README.md"
+homepage = "https://github.com/tomy0000000/Tubee"
+repository = "https://github.com/tomy0000000/Tubee"
+documentation = "https://github.com/tomy0000000/Tubee/wiki"
+
+[tool.poetry.dependencies]
+python = "^3.9.15"
+Authlib = "*"
+Flask = "*"
+Flask-Bcrypt = "*"
+Flask-Login = "*"
+Flask-Migrate = "*"
+Flask-SQLAlchemy = "*"
+Flask-WTF = "*"
+WTForms = "*"
+Werkzeug = "*"
+beautifulsoup4 = "*"
+celery = "*"
+click = "*"
+dropbox = "*"
+google-api-python-client = "*"
+google-auth = "*"
+google-auth-oauthlib = "*"
+gunicorn = "*"
+lxml = "^4.9.1"
+psycopg2 = "*"
+pushover-complete = "*"
+python-dateutil = "^2.8.2"
+requests = "*"
+youtube-dl = "*"
+sentry-sdk = {extras = ["flask"], version = "^1.5.0"}
+loguru = "^0.6.0"
+
+[tool.poetry.group.dev.dependencies]
+argh = "*"
+codecov = "*"
+coverage = "*"
+flask-shell-ipython = "*"
+pyyaml = "*"
+rope = "*"
+watchdog = "*"
+flake8 = "^4.0.1"
+black = "^22.6.0"
+
+[tool.pyright]
+include = ["tubee"]
+exclude = [
+    "**/__pycache__",
+]

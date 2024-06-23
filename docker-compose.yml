@@ -1,0 +1,52 @@
+services:
+  tubee:
+    command: "./docker-entrypoint.sh"
+    container_name: "tubee_app"
+    depends_on:
+      - "postgres"
+      - "celery"
+    env_file:
+      - "instance/production.env"
+    environment:
+      CONFIG: "production"
+    image: "tomy0000000/tubee"
+    restart: "always"
+    volumes:
+      - "./instance:/usr/src/tubee/instance"
+      - "./logs:/usr/src/tubee/logs"
+  postgres:
+    container_name: "tubee_db"
+    env_file:
+      - "instance/production.env"
+    image: "postgres:12-alpine"
+    restart: "always"
+    volumes:
+      - "postgres_data:/var/lib/postgresql/data"
+  celery:
+    command:
+      ["celery", "--app=celery_worker.celery", "worker", "--loglevel=info"]
+    container_name: "tubee_celery"
+    depends_on:
+      - "rabbitmq"
+    env_file:
+      - "instance/production.env"
+    environment:
+      CONFIG: "production"
+    image: "tomy0000000/tubee"
+    restart: "always"
+    volumes:
+      - "./instance:/usr/src/tubee/instance"
+      - "./logs:/usr/src/tubee/logs"
+  rabbitmq:
+    container_name: "tubee_rabbitmq"
+    hostname: "tubee-rabbitmq"
+    environment:
+      RABBITMQ_SERVER_ADDITIONAL_ERL_ARGS: "-rabbit consumer_timeout 31622400000"
+    image: "rabbitmq:3.8"
+    restart: "always"
+    volumes:
+      - "rabbitmq_data:/var/lib/rabbitmq"
+
+volumes:
+  postgres_data:
+  rabbitmq_data:
