@@ -1,0 +1,32 @@
+body {
+  padding-top: 5rem;
+}
+
+pre {
+  white-space: pre-wrap;
+}
+
+img.channel-thumbnails {
+  width: 8rem;
+}
+
+.line {
+  display: inline-block;
+}
+
+#hero {
+  height: 2rem;
+}
+
+#message-wrapper {
+  height: 0;
+  position: sticky;
+  top: 100px;
+  z-index: 1;
+}
+
+@media (min-width: 992px) {
+  #username {
+    margin-right: 1rem;
+  }
+}

@@ -1,0 +1,40 @@
+.carousel-item > img {
+  filter: brightness(0.5);
+  -webkit-filter: brightness(0.5);
+}
+
+.youtube-btn {
+  background: #ff0000;
+  /*color: white;*/
+}
+
+.youtube-btn a {
+  color: white;
+}
+
+#channel-description {
+  white-space: pre-line;
+}
+
+#content-container {
+  position: relative;
+  /*top: -350px;*/
+}
+
+.hub-table-cell {
+  width: 50%;
+}
+
+@media (min-width: 992px) {
+  .col-lg-third-one th {
+    width: 25%;
+  }
+
+  .col-lg-third-one td {
+    width: 75%;
+  }
+}
+
+th.video-thumbnails img {
+  width: 15rem;
+}

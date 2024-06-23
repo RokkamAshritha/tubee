@@ -1,0 +1,27 @@
+<h1>Sitemap</h1>
+<p class="text-muted">Version: {{ version }}</p>
+<table class="table table-hover table-responsive-lg align-middle">
+  <thead class="table-dark">
+    <tr>
+      <th scope="col">Blueprint</th>
+      <th scope="col">Func</th>
+      <th scope="col">Path</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- prettier-ignore -->
+    {% for item in links|dictsort %}
+      {% set blueprint, rules = item %}
+      {% for url, endpoint in rules %}
+    <tr>
+      {% if loop.first %}
+      <th scope="row" rowspan="{{ loop.length }}">{{ blueprint }}</th>
+      {% endif %}
+      <td><a href="{{ url }}" target="_blank">{{ endpoint }}</a></td>
+      <td>{{ url }}</td>
+    </tr>
+    <!-- prettier-ignore -->
+    {% endfor %}
+    {% endfor %}
+  </tbody>
+</table>

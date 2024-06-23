@@ -1,0 +1,52 @@
+<!-- prettier-ignore -->
+{% extends "base.html" %}
+{% set title = "Admin Dashboard" %}
+
+<!-- prettier-ignore -->
+{% block script %}
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+{% endblock %}
+
+<!-- prettier-ignore -->
+{% block content %}
+
+{% set tabs = {
+  "sitemap": "Sitemap",
+  "channels": "Channels",
+  "celery_tasks": "Celery Tasks",
+  "management": "Management",
+} %}
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  {% for key, name in tabs.items() %}
+  <li class="nav-item">
+    <button
+      class="nav-link {{ 'active' if loop.first else '' }}"
+      id="{{ key }}-tab"
+      data-bs-toggle="tab"
+      data-bs-target="#{{ key }}"
+      type="button"
+      role="tab"
+      aria-controls="{{ key }}"
+      aria-selected="{{ 'true' if loop.first else 'false' }}"
+    >
+      {{ name }}
+    </button>
+  </li>
+  {% endfor %}
+</ul>
+
+<div id="admin-dashbaord-tab-content" class="tab-content">
+  {% for key in tabs %}
+  <div
+    class="tab-pane fade {{ 'show active' if loop.first else '' }}"
+    id="{{ key }}"
+    role="tabpanel"
+    aria-labelledby="{{ key }}-tab"
+  >
+    {% include 'admin/' + key + '.html' %}
+  </div>
+  {% endfor %}
+</div>
+
+{% endblock %}
